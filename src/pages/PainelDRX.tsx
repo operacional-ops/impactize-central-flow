@@ -1,12 +1,22 @@
+import { useState, useEffect } from 'react';
+
 const PainelDRX = () => {
+  const [iframeKey, setIframeKey] = useState(0);
+
+  // Force iframe reload every time this component mounts
+  useEffect(() => {
+    setIframeKey(Date.now());
+  }, []);
+
   return (
-    <div className="w-full h-[calc(100vh-68px)] md:h-[calc(100vh-80px)]">
+    <div className="w-full" style={{ height: 'calc(100vh - 68px)' }}>
       <iframe
-        key="drx-flow-frame"
-        src="/painel-drx.html"
+        key={iframeKey}
+        src={`/painel-drx.html?_t=${iframeKey}`}
         className="w-full h-full border-0"
         title="Painel DRX"
         allow="camera;microphone"
+        style={{ minHeight: '100%' }}
       />
     </div>
   );
