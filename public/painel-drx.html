@@ -812,7 +812,7 @@
         const WorkflowWithTeam = ({ currentUser, globalTasks, moveTask, saveTask, bulkAction, inputText, setInputText, sendMessage }) => {
             const [viewingMemberId, setViewingMemberId] = React.useState(null);
             const allMembers = TEAM_DATA.filter(m => m.id !== currentUser.id);
-            const viewingTasks = viewingMemberId ? (globalTasks[viewingMemberId] || {todo:[], doing:[], review:[], done:[]}) : null;
+            const viewingTasks = viewingMemberId ? (globalTasks[viewingMemberId] || {todo:[], doing:[], blocked:[], review:[], done:[]}) : null;
             const viewingMember = viewingMemberId ? TEAM_DATA.find(m => m.id === viewingMemberId) : null;
 
             return (
@@ -825,7 +825,7 @@
                                 <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-slate-700">Sprint Atual</span>
                             </div>
                             <KanbanBoard 
-                                tasks={globalTasks[currentUser.id] || {todo:[], doing:[], review:[], done:[]}} 
+                                tasks={globalTasks[currentUser.id] || {todo:[], doing:[], blocked:[], review:[], done:[]}} 
                                 onMoveTask={(taskId, currentStatus, dir) => moveTask(currentUser.id, taskId, currentStatus, dir)} 
                                 onSaveTask={(task) => saveTask(task, currentUser.id)} 
                                 onBulkAction={bulkAction} 
@@ -843,9 +843,9 @@
                             </div>
                             <div className="flex gap-1.5 overflow-x-auto pb-2">
                                 {allMembers.map(member => {
-                                    const stats = globalTasks[member.id] || {todo:[], doing:[], review:[], done:[]};
-                                    const doingCount = stats.doing.length + stats.review.length;
-                                    const totalTasks = stats.todo.length + stats.doing.length + stats.review.length + stats.done.length;
+                                    const stats = globalTasks[member.id] || {todo:[], doing:[], blocked:[], review:[], done:[]};
+                                    const doingCount = stats.doing.length + stats.review.length + stats.blocked.length;
+                                    const totalTasks = stats.todo.length + stats.doing.length + stats.blocked.length + stats.review.length + stats.done.length;
                                     const donePercent = totalTasks > 0 ? Math.round((stats.done.length / totalTasks) * 100) : 0;
                                     const isSelected = viewingMemberId === member.id;
                                     const firstName = member.name.split(' ')[0];
@@ -903,7 +903,7 @@
             const [inboxOpen, setInboxOpen] = React.useState(false);
             
             const allMembers = TEAM_DATA.filter(m => m.id !== currentUser.id);
-            const selectedTasks = (selectedMemberId && globalTasks[selectedMemberId]) ? globalTasks[selectedMemberId] : { todo: [], doing: [], review: [], done: [] };
+            const selectedTasks = (selectedMemberId && globalTasks[selectedMemberId]) ? globalTasks[selectedMemberId] : { todo: [], doing: [], blocked: [], review: [], done: [] };
             const canEdit = TASK_EDITORS.includes(currentUser.id);
             const openMsgCount = messages.filter(m => m.status === 'open').length;
 
@@ -929,9 +929,9 @@
                             {/* Members: compact horizontal scroll strip */}
                             <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1 flex-shrink-0 godview-members-strip">
                                 {allMembers.map(member => {
-                                     const stats = globalTasks[member.id] || { todo: [], doing: [], review: [], done: [] };
-                                    const doingCount = stats.doing.length + stats.review.length;
-                                    const totalTasks = stats.todo.length + stats.doing.length + stats.review.length + stats.done.length;
+                                     const stats = globalTasks[member.id] || { todo: [], doing: [], blocked: [], review: [], done: [] };
+                                    const doingCount = stats.doing.length + stats.review.length + stats.blocked.length;
+                                    const totalTasks = stats.todo.length + stats.doing.length + stats.blocked.length + stats.review.length + stats.done.length;
                                     const donePercent = totalTasks > 0 ? Math.round((stats.done.length / totalTasks) * 100) : 0;
                                     const isSelected = selectedMemberId === member.id;
                                     const pendingMsg = messages.some(m => m.fromUser.id === member.id && m.status === 'open');
@@ -997,7 +997,7 @@
                                 <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-slate-700">Diretoria</span>
                             </div>
                             <KanbanBoard 
-                                 tasks={globalTasks[currentUser.id] || {todo:[], doing:[], review:[], done:[]}} 
+                                 tasks={globalTasks[currentUser.id] || {todo:[], doing:[], blocked:[], review:[], done:[]}} 
                                 onMoveTask={(taskId, currentStatus, dir) => onMoveTask(currentUser.id, taskId, currentStatus, dir)} 
                                 onSaveTask={(task) => onSaveTask(task, currentUser.id)} 
                                 onBulkAction={onBulkAction} 
