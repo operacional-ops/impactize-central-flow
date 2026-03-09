@@ -69,6 +69,30 @@ function FlowchartsSection() {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.from('drx_flowcharts').update({
+        title: editTitle,
+        description: editDesc,
+        flowchart_data: { steps: editSteps.filter(s => s.label) },
+      }).eq('id', selectedFlow.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['drx-flowcharts'] });
+      setIsEditing(false);
+      setSelectedFlow((prev: any) => prev ? { ...prev, title: editTitle, description: editDesc, flowchart_data: { steps: editSteps.filter(s => s.label) } } : null);
+      toast.success('Fluxograma atualizado!');
+    },
+  });
+
+  const startEditing = () => {
+    setEditTitle(selectedFlow.title || '');
+    setEditDesc(selectedFlow.description || '');
+    setEditSteps((selectedFlow.flowchart_data as any)?.steps?.length ? [...(selectedFlow.flowchart_data as any).steps] : [{ label: '', type: 'step' }]);
+    setIsEditing(true);
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
       <div className="lg:col-span-2 space-y-4">
