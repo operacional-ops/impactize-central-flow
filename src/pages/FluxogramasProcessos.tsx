@@ -472,7 +472,7 @@ function ProcessesSection() {
 // ---- Main Page ----
 export default function FluxogramasProcessos() {
   return (
-    <div className="p-6 space-y-6 h-full">
+    <div className="p-6 pb-[100px] space-y-6 h-full">
       <div>
         <h1 className="text-2xl font-bold">Fluxogramas & Processos</h1>
         <p className="text-muted-foreground text-sm">Gerencie fluxogramas, processos e tire dúvidas com IA</p>
