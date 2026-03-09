@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AiChatPanel } from '@/components/drx/AiChatPanel';
-import { GitBranch, FileText, Plus, Search, Bot, ChevronRight, ArrowRight, CheckCircle, AlertTriangle, Clock, Trash2 } from 'lucide-react';
+import { GitBranch, FileText, Plus, Search, Bot, ChevronRight, ArrowRight, CheckCircle, AlertTriangle, Clock, Trash2, Pencil, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
