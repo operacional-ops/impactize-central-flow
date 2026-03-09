@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Home, MessageSquare, Users, FileText, BarChart3, Settings, Zap, ArrowLeftRight, CheckSquare, PanelLeft, PanelLeftClose, Layers, Sun, Moon, ChevronRight, Inbox, GitBranch, Target, Activity, Monitor, BookOpen, DollarSign, LayoutDashboard } from 'lucide-react';
+import { Home, MessageSquare, Users, FileText, Settings, ArrowLeftRight, CheckSquare, PanelLeft, PanelLeftClose, Layers, Sun, Moon, ChevronRight, Inbox, GitBranch, Target, Monitor, BookOpen, DollarSign, LayoutDashboard } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useTheme } from 'next-themes';
 import { ThemeLogo } from '@/components/ThemeLogo';
@@ -53,9 +53,6 @@ const drxNavItems = [
   { title: 'Chamados', url: '/chamados', icon: Inbox, tutorialId: 'chamados' },
   { title: 'Fluxogramas', url: '/fluxogramas', icon: GitBranch, tutorialId: 'fluxogramas' },
   { title: 'Matriz Decisões', url: '/matriz-decisoes', icon: Target, tutorialId: 'matriz-decisoes' },
-  { title: 'DRX UTMs', url: '/dashboard-operacao', icon: Activity, tutorialId: 'dashboard-operacao' },
-  { title: 'UTMFY-teste', url: '/utmfy-teste', icon: Zap, tutorialId: 'utmfy-teste' },
-  { title: 'DRX Payt', url: '/drx-analytics', icon: BarChart3, tutorialId: 'drx-analytics' },
 ];
 
 export function AppSidebar() {
@@ -82,7 +79,7 @@ export function AppSidebar() {
   });
 
   // Filtrar itens DRX Operações - limited_member não vê itens financeiros/operacionais
-  const operationalUrls = ['/dashboard-operacao', '/utmfy-teste', '/drx-analytics'];
+  const operationalUrls: string[] = [];
   const filteredDrxNavItems = drxNavItems.filter(item => {
     if (isLimitedMember && operationalUrls.includes(item.url)) return false;
     return true;
