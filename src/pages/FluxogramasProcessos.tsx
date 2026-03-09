@@ -255,8 +255,10 @@ function FlowchartsSection() {
                       value={metricsInput}
                       onChange={e => setMetricsInput(e.target.value)}
                       className="min-h-[80px]"
-                />
-              </div>
+                    />
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
         ) : (
